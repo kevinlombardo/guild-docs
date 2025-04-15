@@ -1,0 +1,28 @@
+# Cost Model
+
+cost_model:
+  gpt_token_costs:
+    description: GPT-4 Turbo pricing as of 2025
+    input: "$0.01 per 1K tokens"
+    output: "$0.03 per 1K tokens"
+    example_interaction:
+      input_tokens: 500
+      output_tokens: 1500
+      estimated_cost: "$0.05"
+
+  deployment_guild_usage:
+    light_usage: "$20–50/month — mostly manual workflows, few GPT calls"
+    medium_usage: "$50–150/month — daily use of GPTs for doc writing and review"
+    heavy_usage: "$200+/month — full GPT-GPT automation and large-scale content"
+
+  api_and_hosting_costs:
+    github: "Free for public repos, or $4/user for Pro"
+    vps_server: "$5–20/month for self-hosted API gateway"
+    google_docs_api: "Free within Google API quotas"
+    storage: "$1–5/month if storing generated docs or logs"
+
+  guidance:
+    - Use GPTs for proposal/draft generation, not full automation.
+    - Prefer Git-based workflows for structured, reviewable changes.
+    - Use Actions sparingly or batch changes to reduce token cost.
+    - Consider caching results or PR gating for frequent calls.
