@@ -1,7 +1,7 @@
 # Deployment Guild Charter (Functional)
 
 ## Purpose
-Define a clear, collaborative framework for deployment decision-making and standardization within Hulderman Industries.
+Define a clear, collaborative framework for deployment decision-making and standardization within Iron Wolf Industries.
 
 ## Guild Roles
 - **The Architect**: Patterns, environments, scalability
