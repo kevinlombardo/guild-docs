@@ -1,0 +1,101 @@
+
+openapi: 3.1.0
+info:
+  title: Deployment Guild Actions (Full Access)
+  version: 1.0.0
+servers:
+  - url: https://api.github.com
+
+components:
+  schemas: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: GitHub PAT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /repos/kevinlombardo/guild-docs/contents/{path}:
+    get:
+      operationId: getDocument
+      summary: Retrieve a file from the guild-docs repository
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File content retrieved
+
+    put:
+      operationId: updateDocument
+      summary: Commit a file to a branch in the guild-docs repository
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                content:
+                  type: string
+                branch:
+                  type: string
+      responses:
+        '201':
+          description: File committed
+
+  /repos/kevinlombardo/guild-docs/git/refs:
+    post:
+      operationId: createBranch
+      summary: Create a new branch from main
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ref:
+                  type: string
+                sha:
+                  type: string
+      responses:
+        '201':
+          description: Branch created
+
+  /repos/kevinlombardo/guild-docs/pulls:
+    post:
+      operationId: createPullRequest
+      summary: Create a pull request to merge changes into main
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                head:
+                  type: string
+                base:
+                  type: string
+                body:
+                  type: string
+      responses:
+        '201':
+          description: Pull request created

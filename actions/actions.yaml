@@ -1,0 +1,111 @@
+openapi: 3.1.0
+info:
+  title: Deployment Guild Actions
+  version: 1.0.0
+servers:
+  - url: https://api.github.com
+
+components:
+  schemas: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: GitHub PAT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /repos/kevinlombardo/guild-docs/contents/{path}:
+    get:
+      operationId: getDocument
+      summary: Retrieve a file from the guild-docs repository
+      parameters:
+        - name: path
+          in: path
+          required: true
+          description: Path to the file in the repo (e.g., principles/ci-cd-pipeline.md)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File content retrieved
+
+    put:
+      operationId: updateDocument
+      summary: Commit a file to a branch in the guild-docs repository
+      parameters:
+        - name: path
+          in: path
+          required: true
+          description: Path to the file in the repo
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Commit message
+                content:
+                  type: string
+                  description: Base64 encoded file content
+                branch:
+                  type: string
+                  description: Target branch name
+      responses:
+        '201':
+          description: File committed
+
+  /repos/kevinlombardo/guild-docs/git/refs:
+    post:
+      operationId: createBranch
+      summary: Create a new branch from the default branch (main)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ref:
+                  type: string
+                  description: The name of the branch (refs/heads/{branch-name})
+                sha:
+                  type: string
+                  description: The SHA of the base commit (usually from main)
+      responses:
+        '201':
+          description: Branch created
+
+  /repos/kevinlombardo/guild-docs/pulls:
+    post:
+      operationId: createPullRequest
+      summary: Create a pull request to merge changes into main
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The title of the pull request
+                head:
+                  type: string
+                  description: The name of the branch with changes
+                base:
+                  type: string
+                  description: The branch you want the changes pulled into (usually main)
+                body:
+                  type: string
+                  description: The description of the pull request
+      responses:
+        '201':
+          description: Pull request created

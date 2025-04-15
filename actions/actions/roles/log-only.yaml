@@ -1,0 +1,60 @@
+
+openapi: 3.1.0
+info:
+  title: Deployment Guild Actions (Log-Only Access)
+  version: 1.0.0
+servers:
+  - url: https://api.github.com
+
+components:
+  schemas: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: GitHub PAT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /repos/kevinlombardo/guild-docs/contents/{path}:
+    get:
+      operationId: getDocument
+      summary: Retrieve a file from the guild-docs repository
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File content retrieved
+
+  /repos/kevinlombardo/guild-docs/contents/guild-log/{path}:
+    put:
+      operationId: updateGuildLog
+      summary: Commit a file to the guild-log directory
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                content:
+                  type: string
+                branch:
+                  type: string
+      responses:
+        '201':
+          description: File committed

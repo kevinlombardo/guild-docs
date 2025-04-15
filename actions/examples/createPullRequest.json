@@ -1,0 +1,6 @@
+{
+  "title": "Add Immutable Deployments Principle",
+  "head": "architect-immutable-update-20250413",
+  "base": "main",
+  "body": "This PR introduces the principle for immutable deployments in the guild-docs."
+}
